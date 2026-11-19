@@ -3,12 +3,14 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "rootDir": ".",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
-      "ngx-floaty": ["./dist/ngx-floaty"]
+      "ngx-floaty": ["./projects/ngx-floaty/src/public-api.ts"],
+      "ngx-floaty/*": ["./projects/ngx-floaty/*/src/public-api.ts"]
     },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,

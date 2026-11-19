@@ -9,8 +9,8 @@
     "ngx-floaty": {
       "projectType": "library",
       "root": "projects/ngx-floaty",
-      "sourceRoot": "projects/ngx-floaty/src",
-      "prefix": "lib",
+      "sourceRoot": "projects/ngx-floaty",
+      "prefix": "floaty",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",

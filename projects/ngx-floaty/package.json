@@ -1,11 +1,19 @@
 {
   "name": "ngx-floaty",
   "version": "0.0.1",
+  "description": "Angular tooltips and popovers powered by Floating UI and the Popover API. Successor of ngx-tippy-wrapper.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farengeyt451/ngx-floaty.git"
+  },
+  "keywords": ["angular", "tooltip", "popover", "floating-ui", "popover-api"],
   "peerDependencies": {
-    "@angular/common": "^21.2.0",
-    "@angular/core": "^21.2.0"
+    "@angular/common": ">=21.0.0",
+    "@angular/core": ">=21.0.0"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
     "tslib": "^2.3.0"
   },
   "sideEffects": false
