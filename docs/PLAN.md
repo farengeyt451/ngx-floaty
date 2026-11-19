@@ -22,7 +22,9 @@ Derived from [HANDOFF.md](./HANDOFF.md). Each phase is one PR or a small set of 
 ## Phase 1 — feature spec + scenarios
 
 - [ ] `docs/features.md`: each Tippy prop/behavior → keep / rename / drop, floaty name, tooltip default, popover default, acceptance criterion.
-- [ ] Resolve: named registry (global with dev-mode errors vs scoped); tooltip rendering (top layer vs `body`); `hideOnClick: 'toggle'`; touch hold; focus+click combos; Popover API fallback.
+- [x] Tooltip vs popover split follows Radix UI (HANDOFF decision 8): fixed triggers per directive, no `trigger` prop, HoverCard deferred to v2.
+- [ ] Resolve: named registry (global with dev-mode errors vs scoped); tooltip rendering (top layer vs `body`); touch behavior for tooltips; Popover API fallback.
+- [ ] Map Tippy `trigger` / `interactive` / `hideOnClick` combinations to floaty equivalents (or "not supported") for the migration guide.
 - [ ] Playwright scenario list per feature, including RTL, scroll containers, transformed ancestors, shadow DOM, iframes.
 
 ## Phase 2 — core engine (`ngx-floaty/core`)
@@ -40,13 +42,16 @@ Layout-dependent behavior is tested in Vitest browser mode.
 
 ## Phase 3 — tooltip
 
-- [ ] Directive: hover + focus with delay, `role="tooltip"`, `aria-describedby`, WCAG 1.4.13.
+- [ ] Directive: hover + focus with delay, closes on trigger activation / Esc, `role="tooltip"`, `aria-describedby`, WCAG 1.4.13.
+- [ ] Global `delayDuration` / `skipDelayDuration` via `provideFloaty` (Radix `Tooltip.Provider` semantics).
+- [ ] Dev-mode warning when content contains focusable elements.
 - [ ] Singleton, group (`contentChildren()`), `followCursor`.
 
 ## Phase 4 — popover
 
-- [ ] Directive: click/manual, `[(floatyOpen)]` via `model()`, `aria-expanded`/`aria-controls`/`aria-haspopup`, optional `role="dialog"`.
-- [ ] Focus in on open, return on close; `close` in template context.
+- [ ] Directive: opens on trigger activation or programmatically, `[(floatyOpen)]` via `model()`, `aria-expanded`/`aria-controls`/`aria-haspopup`, optional `role="dialog"`.
+- [ ] Focus in on open, Esc closes and returns focus to trigger; `close` in template context.
+- [ ] Optional anchor element separate from the trigger (Radix `Popover.Anchor`).
 - [ ] Nested popovers (`popover="auto"` stacking).
 
 ## Phase 5 — themes, animations, DX

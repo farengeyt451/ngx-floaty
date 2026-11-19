@@ -29,6 +29,12 @@ Context for continuing work on a new machine/chat. Decisions made on 2026-11-18/
    - E2E: Playwright against the demo app (demo doubles as e2e target), Chromium/Firefox/WebKit, axe a11y checks, screenshot tests for themes/placements, SSR + hydration smoke.
    - CI consumer matrix: scaffold app per Angular major (21, 22, next) → install packed tgz → build → Playwright smoke.
 7. **Demo:** plain Angular app with own small CSS. No Taiga UI / DOMPurify.
+8. **Component split follows Radix UI** (decided 2026-11-19). The choice is made by content, not by trigger, and triggers are fixed per directive — no `trigger` prop:
+   - Tooltip: opens on hover + focus only; closes on trigger activation (click/Enter/Space), pointer leave, blur, Esc. Non-interactive content only; never receives focus. Global delays like Radix `Tooltip.Provider` (`delayDuration` 700, `skipDelayDuration` 300). No click "toggletip" mode.
+   - Popover: opens on trigger activation (click/Enter/Space) or programmatically (`[(floatyOpen)]`, `FloatyService`). Esc closes and returns focus to the trigger. Optional anchor element separate from the trigger.
+   - Hover-triggered interactive content = Radix `HoverCard` (sighted users only) — not in v1, candidate for v2 together with `floatyMenu`.
+   - One `FloatyService` controls instances of both kinds by name.
+   - Dev-mode warning when tooltip content contains focusable elements, pointing to `floatyPopover`.
 
 ## Scope v1: tooltip + popover
 
@@ -38,7 +44,7 @@ Shared internal core, two directives with different defaults and a11y semantics.
 
 | | Tooltip | Popover |
 |---|---|---|
-| Opens on | hover + focus, delayed | click / manual |
+| Opens on | hover + focus, delayed (fixed, see decision 8) | click / programmatic (fixed, see decision 8) |
 | Content | short, non-interactive | interactive |
 | A11y | `role="tooltip"`, `aria-describedby`; hoverable, persistent, Esc-dismissible (WCAG 1.4.13) | `aria-expanded`, `aria-controls`, `aria-haspopup`, optional `role="dialog"`; focus in on open, return on close |
 | Dismiss | pointer leave, blur, Esc | Esc, outside click, `close()` |
