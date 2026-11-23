@@ -1,10 +1,5 @@
 name: Release
 
-# Publishes dist/ngx-floaty when a GitHub release is published.
-# The release tag must be `v<version>` matching projects/ngx-floaty/package.json.
-# Auth uses npm trusted publishing (OIDC): configure the trusted publisher for this
-# repo and workflow on npmjs.com; no NPM_TOKEN secret is needed.
-
 on:
   release:
     types: [published]
