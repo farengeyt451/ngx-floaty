@@ -1,0 +1,50 @@
+name: Release
+
+# Publishes dist/ngx-floaty when a GitHub release is published.
+# The release tag must be `v<version>` matching projects/ngx-floaty/package.json.
+# Auth uses npm trusted publishing (OIDC): configure the trusted publisher for this
+# repo and workflow on npmjs.com; no NPM_TOKEN secret is needed.
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    environment: npm
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+
+      - name: Check tag matches library version
+        id: version
+        run: |
+          version="$(node -p "require('./projects/ngx-floaty/package.json').version")"
+          if [ "${GITHUB_REF_NAME}" != "v${version}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match library version v${version}" >&2
+            exit 1
+          fi
+          if [[ "$version" == *-* ]]; then echo "dist-tag=next" >> "$GITHUB_OUTPUT"; else echo "dist-tag=latest" >> "$GITHUB_OUTPUT"; fi
+
+      - run: npm run lint
+      - run: npm test -- --watch=false
+      - run: npm run build:lib
+
+      - name: Publish
+        working-directory: dist/ngx-floaty
+        run: npm publish --provenance --access public --tag ${{ steps.version.outputs.dist-tag }} --registry=https://registry.npmjs.org/
