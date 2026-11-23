@@ -28,7 +28,16 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/ngx-floaty/tsconfig.spec.json"
+            "tsConfig": "projects/ngx-floaty/tsconfig.spec.json",
+            "exclude": ["**/*.browser.spec.ts"]
+          },
+          "configurations": {
+            "browser": {
+              "browsers": ["chromiumHeadless"],
+              "browserViewport": "1280x720",
+              "include": ["**/*.browser.spec.ts"],
+              "exclude": []
+            }
           }
         }
       }

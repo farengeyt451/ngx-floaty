@@ -8,7 +8,7 @@ describe('provideFloaty', () => {
   });
 
   it('provides the given config', () => {
-    const mockConfig: FloatyConfig = { alignment: 'start', placement: 'right' };
+    const mockConfig: FloatyConfig = { placement: 'right-start' };
     TestBed.configureTestingModule({ providers: [provideFloaty(mockConfig)] });
 
     expect(TestBed.inject(FLOATY_CONFIG)).toEqual(mockConfig);
