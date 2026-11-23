@@ -1,9 +1,11 @@
 import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
-import type { Placement } from '@floating-ui/dom';
+import type { Placement, Alignment } from '@floating-ui/dom';
 
 export type FloatyPlacement = Placement;
+export type FloatyAlignment = Alignment;
 
 export interface FloatyConfig {
+  alignment?: FloatyAlignment;
   placement?: FloatyPlacement;
 }
 
