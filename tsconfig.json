@@ -39,6 +39,9 @@
     },
     {
       "path": "./e2e/tsconfig.json"
+    },
+    {
+      "path": "./scripts/consumer-smoke/tsconfig.json"
     }
   ]
 }

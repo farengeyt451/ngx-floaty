@@ -1,0 +1,9 @@
+/* Editor/type-check only: the root `paths` map `ngx-floaty/*` to the library sources. In the generated app they come from the installed tgz. */
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/consumer-smoke",
+    "types": ["vitest/globals"]
+  },
+  "include": ["fixtures/**/*.ts"]
+}

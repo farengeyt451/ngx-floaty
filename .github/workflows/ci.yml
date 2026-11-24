@@ -28,6 +28,33 @@ jobs:
       - run: npm run format:check
       - run: npm test -- --watch=false
       - run: npm run build:lib
+      - run: npm pack ./dist/ngx-floaty --pack-destination dist
+      - uses: actions/upload-artifact@v7
+        with:
+          name: library-tarball
+          path: dist/*.tgz
+          retention-days: 7
+
+  consumer:
+    name: Consumer (Angular ${{ matrix.angular }}, Node ${{ matrix.node }})
+    needs: check
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.angular == 'next' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        angular: ['21', '22', 'next']
+        node: ['24', '26']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: library-tarball
+          path: tarball
+      - run: node scripts/consumer-smoke/run.mjs --angular ${{ matrix.angular }} --tarball tarball/ngx-floaty-*.tgz
 
   browser-unit:
     name: Unit tests (Chromium)
