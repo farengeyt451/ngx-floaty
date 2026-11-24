@@ -6,7 +6,10 @@ const angular = require('angular-eslint');
 const prettier = require('eslint-config-prettier/flat');
 const globals = require('globals');
 
-/** @param {string} prefix */
+/**
+ * @param {string} prefix
+ * @returns {import('eslint').Linter.RulesRecord}
+ */
 function selectorRules(prefix) {
   return {
     '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix, style: 'camelCase' }],
