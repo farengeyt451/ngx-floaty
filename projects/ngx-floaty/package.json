@@ -1,6 +1,6 @@
 {
   "name": "ngx-floaty",
-  "version": "0.0.1",
+  "version": "0.1.0-alpha.0",
   "description": "Angular tooltips and popovers powered by Floating UI and the Popover API. Successor of ngx-tippy-wrapper.",
   "license": "MIT",
   "repository": {
